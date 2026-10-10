@@ -1,0 +1,14 @@
+{
+  "name": "hosait",
+  "description": "Hosait's plugin for Claude Code: publish and operate apps on hosait.com.",
+  "owner": {
+    "name": "Hosait"
+  },
+  "plugins": [
+    {
+      "name": "hosait",
+      "source": "./plugins/hosait",
+      "description": "Publish and operate your Hosait app from Claude Code: sign in once in the browser, no token to copy."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "hosait": {
+      "type": "http",
+      "url": "https://hosait.com/mcp?auth=required"
+    }
+  }
+}

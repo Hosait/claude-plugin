@@ -1,0 +1,11 @@
+{
+  "name": "hosait",
+  "description": "Publish and operate your Hosait app from Claude Code: the Hosait MCP tools with browser sign-in, and a skill that always reads the current Hosait guide.",
+  "author": {
+    "name": "Hosait",
+    "url": "https://hosait.com"
+  },
+  "homepage": "https://hosait.com/docs#mcp",
+  "repository": "https://github.com/Hosait/claude-plugin",
+  "license": "MIT"
+}
