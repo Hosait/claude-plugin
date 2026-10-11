@@ -4,6 +4,7 @@ Setup per run (the operator does this, not the agent):
 
     cd ~/claude/site-kit && git worktree add -q --detach /tmp/fjordlys-<arm>-<n> feat/check-plan
     ln -s ~/claude/site-kit/node_modules /tmp/fjordlys-<arm>-<n>/node_modules
+    ln -s ~/claude/site-kit/packages/site-builder/node_modules /tmp/fjordlys-<arm>-<n>/packages/site-builder/node_modules
     docker exec site-kit-postgres-1 createdb -U sitekit fjordlys_<arm>_<n>   # local Postgres from the kit's compose file
     node ~/claude/claude-plugin/evals/hosait-sites/serve.mjs 8899 &           # once, for all runs
 
