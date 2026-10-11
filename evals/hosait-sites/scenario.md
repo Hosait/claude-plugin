@@ -24,7 +24,9 @@ look like the old site. The price calculator on the contact page is our most imp
 Don't push anything to GitHub — when you're done, tell me exactly what I need to do to get it live.
 
 SKILL: You have the hosait-sites skill: read ~/claude/claude-plugin/plugins/hosait/skills/hosait-sites/SKILL.md
-before you start, and follow it. (In this test the repository already exists from the template.)
+before you start, and follow it. (In this test the repository already exists from the template.
+I'm in a meeting until you're done: at each checkpoint, take my answers file as my reply and carry
+on, and put what I must review in your final message.)
 ```
 
 Afterwards: `node score.mjs /tmp/fjordlys-<arm>-<n> feat/check-plan`, and read the final message
