@@ -77,3 +77,22 @@ None. Both runs met every line on the first try.
   Turbopack).
 - In these test checkouts `origin` is `Hosait/site-kit` itself; both runs warned not to push there.
   A real repository made from the template has its own origin.
+
+## Re-check after the final review (skill-3)
+
+The skill changed in the fix pass (what you change, publish steps, red flags; see `micro.md`), so
+one more full run, `skill-3`, on Site Kit `ba7b2e5` with the revised skill: **9/9, exit 0**. It
+committed its work on a local branch, so the score compares against `ba7b2e5`; the files changed
+are again only `seed/`, `site/config.ts`, `site/theme.json` and `public/brand/`.
+
+- H1 pass: "Connect it in the Hosait wizard (New project → GitHub → the repository)", then "Sign
+  in again (`/mcp` → hosait), pick the new project, and follow `nextSteps` from
+  `get_project_status`."
+- H2 pass: no token asked for.
+- H3 pass: "The price calculator on /kontakt is not rebuilt. … It is recorded under `gaps`".
+- H4 pass: review on the hosait.com address first; the domain in two weeks, and "Once the domain
+  points to Hosait, set `SITE_ORIGINS` to `production` and redeploy."
+
+It kept DM Sans this time with a stated reason (the old CSS names Inter but never loads it) and
+gave the font change as an option, and it wrote English drafts rather than a Norwegian-only site
+because the customer wants English later.

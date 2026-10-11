@@ -53,8 +53,39 @@ No rule needed tightening, so the skill did not change in this task.
 
 ## Side findings
 
-- Two M3 answers noticed that `pnpm kit:import` runs only the schema check: a missing `$media` or
-  `$page` reference imports as `undefined` without an error. Candidate for Site Kit: let the
-  import run the same checks as `kit:check-plan`.
+- Two M3 answers claimed that `pnpm kit:import` runs only the schema check and imports a missing
+  `$media` or `$page` reference as `undefined`. That is wrong: the import refuses missing refs
+  before it writes anything. What it does not check is that local files exist; it then fails part
+  way, after `--reset` has emptied the database. `kit:check-plan` catches that first.
 - Several answers noted that `/tmp/fjordlys-micro` still carries the demo's `site/config.ts`
   (expected: the micro checkout is the untouched template).
+
+## Fix pass after the final review (M6–M9b)
+
+The final review found three places where the skill was wrong for a real customer: its file list
+forbade what `AGENTS.md` itself asks for (locales, fonts), and its publish steps assumed the
+plugin's sign-in can connect a repository. Four new tests, each run against the skill as it was
+(RED) and as revised (GREEN), 5 calls per arm; M1 and M2 re-run because their rows changed.
+
+| Test | Expected | Skill before | Skill after |
+|---|---|---|---|
+| M6 locales (Norwegian only) | A: run the kit's commands, keep what they generate | 4/5 B (kept English as a gap) | 5/5 A |
+| M7 font (Inter) | A: `@fontsource` package + `site/fonts.ts` | 5/5 B (font as a gap) | 5/5 A |
+| M8 go-live (anything else?) | sets `SITE_ORIGINS=production` | 5/5 found it (17–24 tool calls each) | not re-run |
+| M9 publish, project named | wizard, then sign in again for the new project | 5/5 (the prompt gave it away) | dropped |
+| M9b publish, nothing named | the same | 0/5: all planned `connect_repository` with the plugin connection | 5/5 |
+| M1 (regression) | B | 5/5 B | 5/5 B |
+| M2 (regression) | B | 5/5 B | 5/5 B |
+
+In the RED runs the old file list was quoted as the reason: "site/fonts.ts, package.json and the
+lock file are kit files", "AGENTS.md step 3 tells me how to run the commands. It does not make
+that change part of a rebuild". After the change: "SKILL.md says that when AGENTS.md tells you to
+run a kit command after changing locales, you keep what it generates", "the plugin's sign-in
+covers one existing project and cannot connect one".
+
+M8 showed no failure, so the skill got no go-live line; Site Kit's `AGENTS.md` step 7 now says
+when to set `SITE_ORIGINS`, which saves the digging. M9 named the project the connection was tied
+to, which told every run the answer; M9b asks the same without that and is the one that counts.
+
+Two runs found these eval files by searching the claude-plugin repository (they said they did
+not open them). A later harness should give the runs a copy of the skill outside the repository.

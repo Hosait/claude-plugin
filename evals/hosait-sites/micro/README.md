@@ -13,3 +13,7 @@ the M file:
 
 The bracketed sentence is the with-skill arm only. A quoted option or an echo of the
 alternatives is not a choice.
+
+M8 and M9 have no options: replace the last sentence of the prompt with "Say the first things
+you do and exactly what you say to the customer." and judge the free text against the Expected
+line.
