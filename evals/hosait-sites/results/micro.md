@@ -89,3 +89,28 @@ to, which told every run the answer; M9b asks the same without that and is the o
 
 Two runs found these eval files by searching the claude-plugin repository (they said they did
 not open them). A later harness should give the runs a copy of the skill outside the repository.
+
+## After Hosait #262: connecting from the plugin (M10, M11)
+
+Hosait #262 (12 Oct) lets the plugin's browser sign-in connect a repository when the chosen
+project is blank (`connect_repository`, approved by the owner in Hosait). The skill said the
+plugin could not, so it got a test first.
+
+| Test | Expected | Skill before | Skill after |
+|---|---|---|---|
+| M10 blank project signed in | `connect_repository`, owner approves; the project page if refused | 0/5 (all sent Kari to the project page or the wizard) | 5/5 |
+| M11 no `gh` | "Use this template" on GitHub, then `git clone` | 5/5 found it unaided | not changed |
+| M9b (regression) | connect if blank, else wizard and sign in again; no token | | 5/5 keep the rules (1 muddled the order) |
+| M2 (regression) | B | | 5/5 B |
+
+RED, in the agents' words: "The skill says the plugin sign-in cannot connect a repo" and, from
+an out-of-date local Hosait checkout, "`SIGNIN_SCOPE = 'read deploy'`". Four of five found the
+blank project's own "Add your project" card, which the revised step now names as the fallback.
+M11 showed no failure, so the skill gets no line for it.
+
+Side findings:
+- Hosait's own guide (`skills/hosait/SKILL.md`, served by `get_hosait_guide`) still says the
+  browser sign-in grants read and deploy only. One GREEN run read it and expected a refusal. The
+  guide needs the #262 change too.
+- A plugin sign-in answers `analyze_repository` with `scope_missing` since #262 (only
+  `connect_repository` gets `source`); one run planned to analyse first.

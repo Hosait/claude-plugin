@@ -5,7 +5,7 @@ description: Use when someone wants to move, rebuild, migrate or copy an existin
 
 # Moving a website to Hosait (Site Kit)
 
-Rebuild the customer's current site on Site Kit (Next.js, Payload CMS) and publish it on Hosait.
+Rebuild the customer's site on Site Kit (Next.js, Payload CMS) and publish it on Hosait.
 The steps are in the template's `AGENTS.md`: follow them in order.
 
 ## Start
@@ -31,18 +31,18 @@ part the most important thing on the site, and when the demo is in an hour.
 ## Checkpoints with the user
 
 1. After `report.md`: walk through it, then ask what `site/questions.json` still needs.
-2. After the first template is imported: show it running (`pnpm dev`) and agree it is close
-   enough before the rest.
+2. After the first template is imported: show it running (`pnpm dev`); agree it is close enough.
 3. Before publishing: the user approves the local site and the gap list.
 
 ## Publish on Hosait
 
 1. The user pushes the repository; you push only if they say so.
-2. The user connects it in the Hosait wizard (New project → GitHub → the repository): the
-   plugin's sign-in covers one existing project and cannot connect one. Never ask for a token.
-3. To follow the first deploy, the user signs in again (`/mcp` → hosait) and picks the new
-   project. Then follow `nextSteps` from `get_project_status`: the first deploy imports the plan,
-   and the user creates the first admin user.
+2. If the user signed in (`/mcp` → hosait) to a blank project, connect it with
+   `connect_repository`; they approve it in Hosait (if the tool refuses, they connect it on that
+   project's page). Without a blank project, they use the wizard (New project → GitHub → the
+   repository), then sign in again and pick the new project. Never ask for a token.
+3. Follow the first deploy (`wait_for_deploy`, then `nextSteps` from `get_project_status`): it
+   imports the plan, then the user creates the first admin user.
 4. The site runs on its hosait.com address. The user reviews it there, then adds their own domain
    in Hosait (Settings → Domains); `AGENTS.md` step 7 covers the switch-over.
 
@@ -52,5 +52,5 @@ part the most important thing on the site, and when the demo is in an hour.
 |---|---|
 | "It's their most important feature, so I'll build it" | Closest block and a gap, said plainly. |
 | "`site/blocks/custom/` is there for customer blocks" | Not in a rebuild. A new block, with the migration and tests it needs, is separate work. |
-| "A kit test fails with this config, so I'll fix the test" | Leave kit tests alone and name the failure in your hand-off. |
+| "A kit test fails with this config, so I'll fix it" | Leave it; name the failure in your hand-off. |
 | "I've passed this on to the Hosait team" | You can't. Tell the user what they can do. |
