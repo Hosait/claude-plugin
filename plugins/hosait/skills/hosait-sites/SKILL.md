@@ -10,10 +10,10 @@ The steps are in the template's `AGENTS.md`: follow them in order.
 
 ## Start
 
-1. `gh repo create <name> --private --template Hosait/site-kit --clone`.
-   If GitHub answers that the repository cannot be found, Site Kit is not public yet. Tell the
-   user exactly that, and that they can ask Hosait for access under Feedback in the Hosait app.
-   Then stop. You have no way to reach Hosait yourself: never say you have told Hosait, or will.
+1. `gh repo create <name> --private --template Hosait/site-kit --clone`. The template is public:
+   if this fails, tell the user what GitHub said and check the name, the `gh` sign-in and the
+   network, or the user clicks "Use this template" on github.com/Hosait/site-kit. You cannot
+   reach Hosait yourself: never say you have told Hosait, or will.
 2. Read `AGENTS.md` in the new repository and follow its steps.
 
 ## What you change

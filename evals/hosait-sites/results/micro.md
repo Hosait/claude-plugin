@@ -114,3 +114,18 @@ Side findings:
   guide needs the #262 change too.
 - A plugin sign-in answers `analyze_repository` with `scope_missing` since #262 (only
   `connect_repository` gets `source`); one run planned to analyse first.
+
+## Site Kit public (M4b)
+
+Bjørn approved publishing Site Kit; it became a public MIT template on 12 October
+(Hosait/site-kit#7). The skill's step 1 still said a "not found" answer meant "Site Kit is not
+public yet", which was now false.
+
+| Test | Expected | Skill before | Skill after |
+|---|---|---|---|
+| M4b template "not found" (same prompt as M4) | tell the user what GitHub said; check name, `gh` sign-in, network, or "Use this template"; no false "not public"; no claim to have told Hosait | 2/5 (3/5 told the customer "Site Kit is not public yet") | 5/5 |
+
+The two RED runs that passed checked `gh repo view` themselves and refused the skill's wording:
+"I cannot honestly tell the customer it is not public yet." After the change every run reported
+GitHub's message, checked the template and the sign-in, offered the "Use this template" button,
+and said it could not reach Hosait.
