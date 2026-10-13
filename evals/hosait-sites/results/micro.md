@@ -129,3 +129,27 @@ The two RED runs that passed checked `gh repo view` themselves and refused the s
 "I cannot honestly tell the customer it is not public yet." After the change every run reported
 GitHub's message, checked the template and the sign-in, offered the "Use this template" button,
 and said it could not reach Hosait.
+
+## Review round 2: a failed seed, and pushing the domain change (M12, M13)
+
+The second Site Kit review asked whether the skill should say what the agent does when the seed
+fails, and that `AGENTS.md` step 7 asks for "commit and push" after the domain change while the
+skill says the user pushes. Both were tested against the skill as it is, with the shared checkout
+on site-kit#3 (0b78338), whose step 7 now says where a failed seed's reason is and that the user
+presses "Run seed again".
+
+| Test | Expected | Skill as it is |
+|---|---|---|
+| M12 seed failed | the `[seed]` reason from the runtime log (or from Kari when there are no Hosait tools); fix and check the plan; push only on Kari's word; Kari presses "Run seed again"; a push alone does not re-run it | 5/5 |
+| M13 domain change | B: change and commit `site/config.ts`, Kari pushes (or says push); she sets `SITE_ORIGINS` under Variables | 5/5 |
+
+No run failed, so the skill gets no line for either: `AGENTS.md` step 7 carries both, and the
+skill's "the user pushes" was read as overriding step 7's "commit and push" in every M13 run.
+
+Side findings:
+- Two M12 runs found a local `fjordlys-site` branch in the shared site-kit clone, left from the
+  full test runs on an older kit, and worked from it. Not a skill issue.
+- Two runs raised the order of "create the first admin right after the first deploy" (step 7)
+  and a failed seed: once a user exists, a re-run no longer clears what a killed run left, and
+  the admin's seed panel "replace" is the way. A failed import removes what it wrote, so this
+  only matters after a killed container.
