@@ -171,3 +171,22 @@ The test runs have no Hosait tools, so they could only ask the user where to loo
 and one suggested pressing "Run seed again" before reading the reason. An agent with the tools
 would call `get_deploy_log` on the skill's word and find no reason there, which the runs cannot
 show. The corrected line keeps everything else in a405f6e.
+
+## Go-live without a variable (M8, M13), 2026-10-16
+
+Site Kit #15 and #18 changed step 7: the site switches to production by itself once Hosait
+serves the verified domain (`HOSAIT_URL`) and it is one of the `hosts` in `site/config.ts`, and
+the move to the domain waits until `pnpm qa:launch` and `pnpm qa:axe` pass. Nobody sets
+`SITE_ORIGINS` any more. M8's expected answer and M13's options were rewritten for that; the
+rows above ("sets `SITE_ORIGINS=production`") are from before. Runs on Site Kit main (5ef184d)
+with the skill on claude-plugin main, 5 fresh sonnet calls each.
+
+| Test | Expected | Result |
+|---|---|---|
+| M8 go-live (anything else?) | no variable; check production on the domain (robots.txt, `noindex`), redeploy if the domain was verified after the last deploy; launch checks | 5/5: none asked for `SITE_ORIGINS` (three said to leave it unset); all sent her to robots.txt and a redeploy; all offered `qa:launch` on the domain |
+| M13 domain change | B: change and commit `site/config.ts`, Kari pushes (or says push); production follows | 5/5 B |
+
+Two things the runs found that the skill and step 7 do not say: a site answers on a domain that
+is not in `hosts` (the default site), so "it answers" proves nothing; and `qa:launch` does not
+check robots.txt or `noindex`, so a green launch check does not show production either. Two runs
+also raised the bare domain and form e-mail (no SMTP) unprompted.

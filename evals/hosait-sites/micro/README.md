@@ -1,6 +1,6 @@
 # Decision micro-tests
 
-One shared checkout for all calls: `git worktree add -q --detach /tmp/fjordlys-micro feat/check-plan`
+One shared checkout for all calls: `git worktree add -q --detach /tmp/fjordlys-micro origin/main`
 in site-kit. Each call is one fresh subagent (sonnet) with this prompt, then the scenario from
 the M file:
 
