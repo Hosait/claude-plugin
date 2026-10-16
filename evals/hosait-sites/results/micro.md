@@ -219,6 +219,19 @@ that "a literal reading … supports A"; the options spelled B out. With the cha
 "no choice for the user, even if they say yes". M14 and M15 were re-run because Start step 1,
 step 2 and checkpoint 0 were reworded; the trimmed gap paragraph keeps M1's wording.
 
+### A shorter skill (Bjørn's review of #4), 2026-10-16
+
+Bjørn asked for a shorter SKILL.md (880 words). Repetition is trimmed, and no rule is dropped: the
+intro no longer lists what is declined (the gap paragraph and checkpoint 0 do), and Start steps
+1 and 3 and checkpoint 0 are worded more tightly. 841 words. The three tests on that text were
+run again, 5 fresh sonnet calls each, with the skill read from the branch.
+
+| Test | Expected | Result |
+|---|---|---|
+| M14 check first | B | 5/5 B: the check in a temporary folder first; no repository, no crawl |
+| M15 shop declined | decline plainly, no partial move | 5/5: declined from `assess.md`; no partial move, no repository, no claim to have told Hosait |
+| M16 not enough read, Kari says "go ahead" | B | 5/5 B, all citing "no choice for the user, even if they say yes" |
+
 ## Go-live without a variable (M8, M13), 2026-10-16
 
 Site Kit #15 and #18 changed step 7: the site switches to production by itself once Hosait

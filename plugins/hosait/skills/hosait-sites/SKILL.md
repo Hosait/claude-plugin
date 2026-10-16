@@ -8,13 +8,12 @@ description: Use when someone wants to move, rebuild, migrate or copy an existin
 Rebuild the customer's site on Site Kit (Next.js, Payload CMS) and publish it on Hosait.
 The steps are in the template's `AGENTS.md`: follow them in order.
 
-Hosait moves only simple content websites (about, services, news, people, contact). Web shops,
-product catalogues, sites with a login or member area and sites built around heavy integrations
-are declined, not partly rebuilt. The fit check (`site-builder assess <url>`) decides first.
+Hosait moves only simple content websites (about, services, news, people, contact); the fit
+check (`site-builder assess <url>`) decides first, and what it declines is never partly rebuilt.
 
 ## Start
 
-1. Check that Hosait Sites moves this kind of site. Create nothing before this:
+1. Check the site first. Create nothing before this:
 
        rm -rf /tmp/site-kit-check
        git clone --depth 1 https://github.com/Hosait/site-kit /tmp/site-kit-check
@@ -27,8 +26,8 @@ are declined, not partly rebuilt. The fit check (`site-builder assess <url>`) de
    if this fails, tell the user what GitHub said and check the name, the `gh` sign-in and the
    network, or the user clicks "Use this template" on github.com/Hosait/site-kit. You cannot
    reach Hosait: never say you have told Hosait, or will.
-3. Read `AGENTS.md` in the new repository and follow its steps. Its step 0 runs the check again
-   inside the repository, and that result decides.
+3. Read `AGENTS.md` in the new repository and follow its steps; its step 0 repeats the check, and
+   that result decides.
 
 ## What you change
 
@@ -45,12 +44,11 @@ or member area, or booking or payment built into the site is not a gap: the chec
 
 ## Checkpoints with the user
 
-0. After `assess.md` (Start step 1), before anything else. **Red:** tell the user plainly why
-   Hosait does not move this kind of site (from `assess.md`) and stop: no repository, no crawl,
-   no partial move. **Not enough read** (`not-enough-read`) is no choice for the user, even if
-   they say yes: run the check again (a larger `--budget`, or the address a note names); if it
-   still cannot read the site, stop and say so. **Yellow:** go on only when the user accepts the
-   scope and storage in `assess.md`. **Green:** go on.
+0. After `assess.md`, before anything else. **Red:** say plainly why (from `assess.md`) and stop:
+   no repository, no crawl, no partial move. **Not enough read** (`not-enough-read`) is no choice
+   for the user, even if they say yes: run the check again (a larger `--budget`, or the address a
+   note names); if it still fails, stop and say so. **Yellow:** go on only when the user accepts
+   the scope and storage in `assess.md`. **Green:** go on.
 1. After `report.md`: walk through it, then ask what `site/questions.json` still needs.
 2. After the first template is imported: show it running (`pnpm dev`); agree it is close enough.
 3. Before publishing: the user approves the local site and the gap list.
