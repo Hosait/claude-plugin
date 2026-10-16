@@ -218,3 +218,22 @@ Before the change every run chose B, but three said the skill does not cover the
 that "a literal reading … supports A"; the options spelled B out. With the change all five cite
 "no choice for the user, even if they say yes". M14 and M15 were re-run because Start step 1,
 step 2 and checkpoint 0 were reworded; the trimmed gap paragraph keeps M1's wording.
+
+## Go-live without a variable (M8, M13), 2026-10-16
+
+Site Kit #15 and #18 changed step 7: the site switches to production by itself once Hosait
+serves the verified domain (`HOSAIT_URL`) and it is one of the `hosts` in `site/config.ts`, and
+the move to the domain waits until `pnpm qa:launch` and `pnpm qa:axe` pass. Nobody sets
+`SITE_ORIGINS` any more. M8's expected answer and M13's options were rewritten for that; the
+rows above ("sets `SITE_ORIGINS=production`") are from before. Runs on Site Kit main (5ef184d)
+with the skill on claude-plugin main, 5 fresh sonnet calls each.
+
+| Test | Expected | Result |
+|---|---|---|
+| M8 go-live (anything else?) | no variable; check production on the domain (robots.txt, `noindex`), redeploy if the domain was verified after the last deploy; launch checks | 5/5: none asked for `SITE_ORIGINS` (three said to leave it unset); all sent her to robots.txt and a redeploy; all offered `qa:launch` on the domain |
+| M13 domain change | B: change and commit `site/config.ts`, Kari pushes (or says push); production follows | 5/5 B |
+
+Two things the runs found that the skill and step 7 do not say: a site answers on a domain that
+is not in `hosts` (the default site), so "it answers" proves nothing; and `qa:launch` does not
+check robots.txt or `noindex`, so a green launch check does not show production either. Two runs
+also raised the bare domain and form e-mail (no SMTP) unprompted.
