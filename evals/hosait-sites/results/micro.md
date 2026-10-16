@@ -199,3 +199,22 @@ repository comes only on green or after a yes to yellow, and `AGENTS.md` step 0 
 check inside the repository, where that result decides. Checkpoint 0 adds "no repository" for
 red. The gap paragraph says an embedded booking widget is a gap, while a shop, a catalogue, a
 login or member area, or booking or payment built into the site is declined.
+
+### A check that could not read enough (M16), 2026-10-16
+
+Bjørn's review of #4: Site Kit #13 makes "not enough read" (`not-enough-read`) a check that runs
+again, never a yellow for the user to accept, but the skill said "go on at yellow after the
+user's yes". The change: checkpoint 0 and Start step 2 say not-enough-read is no choice for the
+user, even if they say yes; the check runs again and, if it still cannot read the site, the
+agent stops. Start step 1 also clears `/tmp/site-kit-check` first, so the check can run twice.
+
+| Test | Expected | Skill before | With the change |
+|---|---|---|---|
+| M16 not enough read, Kari says "go ahead" | B: run again; stop if still unread; no "do you accept?" | 5/5 B, by judgement | 5/5 B, citing the rule |
+| M14 check first (re-run) | B | — | 5/5 |
+| M15 shop declined (re-run) | decline plainly, no partial move | — | 5/5 |
+
+Before the change every run chose B, but three said the skill does not cover the case, and one
+that "a literal reading … supports A"; the options spelled B out. With the change all five cite
+"no choice for the user, even if they say yes". M14 and M15 were re-run because Start step 1,
+step 2 and checkpoint 0 were reworded; the trimmed gap paragraph keeps M1's wording.
