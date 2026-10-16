@@ -153,3 +153,31 @@ Side findings:
   and a failed seed: once a user exists, a re-run no longer clears what a killed run left, and
   the admin's seed panel "replace" is the way. A failed import removes what it wrote, so this
   only matters after a killed container.
+
+### The fit check before anything is created (M14, M15)
+
+A test move of a web shop (923 sitemap URLs, about 900 product pages) started rebuilding with no
+check. Hosait's decision: web shops, product catalogues, login or member areas and built-in
+services are declined, never moved in part. Site Kit gets `site-builder assess`
+(Hosait/site-kit#11, with #12 on top), and #3 here makes its result checkpoint 0 and adds the
+red flag "It is a shop, but I can move the content pages". Both tests start before a
+repository exists, so they have their own prompt (in each M file) instead of the shared checkout.
+
+| Test | Expected | Skill on main | With #3 | #3 and this change |
+|---|---|---|---|---|
+| M14 check first | B: the check from a temporary clone; the repository only on green or a yes to yellow | 0/5 (A) | 0/5 (A) | 5/5 |
+| M15 shop declined | decline plainly; no partial move, no repository, no exception to ask Hosait for | 0/5 | 5/5 | 5/5 |
+
+- With #3, every M14 run still made the repository first, because Start step 1 is
+  `gh repo create` and the check is `AGENTS.md` step 0 inside it. Runs said "B invents a
+  workflow the skill doesn't contain" and "the private repo is cheap". In the wizard way a blank
+  Hosait project exists too.
+- On main, every M15 run left a partial move open: a smaller site with the content pages, or
+  "if Hosait agrees, I'll start on those three pages". With #3's checkpoint 0 and red-flag row,
+  all five declined plainly.
+
+This change moves the check into Start step 1, from a shallow clone in a temporary folder. The
+repository comes only on green or after a yes to yellow, and `AGENTS.md` step 0 repeats the
+check inside the repository, where that result decides. Checkpoint 0 adds "no repository" for
+red. The gap paragraph says an embedded booking widget is a gap, while a shop, a catalogue, a
+login or member area, or booking or payment built into the site is declined.

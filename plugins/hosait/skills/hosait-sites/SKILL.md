@@ -10,16 +10,26 @@ The steps are in the template's `AGENTS.md`: follow them in order.
 
 Hosait moves only simple content websites (about, services, news, people, contact). Web shops,
 product catalogues, sites with a login or member area and sites built around heavy integrations
-are declined, not partly rebuilt. `AGENTS.md` step 0 (`pnpm site-builder assess <url>`) decides
-this before anything else is read or built.
+are declined, not partly rebuilt. The fit check (`site-builder assess <url>`) decides this
+before anything is created, read or built.
 
 ## Start
 
-1. `gh repo create <name> --private --template Hosait/site-kit --clone`. The template is public:
+1. Check first that Hosait Sites moves this kind of site. Create nothing before this:
+
+       git clone --depth 1 https://github.com/Hosait/site-kit /tmp/site-kit-check
+       npm ci --prefix /tmp/site-kit-check/packages/site-builder
+       node /tmp/site-kit-check/packages/site-builder/bin/site-builder.js assess <url> --out /tmp/site-kit-check/assess
+
+   It writes `assess.md` for the user and answers green, yellow or red; red also exits 3
+   (checkpoint 0).
+2. Only on green, or on yellow after the user's yes:
+   `gh repo create <name> --private --template Hosait/site-kit --clone`. The template is public:
    if this fails, tell the user what GitHub said and check the name, the `gh` sign-in and the
    network, or the user clicks "Use this template" on github.com/Hosait/site-kit. You cannot
    reach Hosait yourself: never say you have told Hosait, or will.
-2. Read `AGENTS.md` in the new repository and follow its steps.
+3. Read `AGENTS.md` in the new repository and follow its steps. Its step 0 runs the check again
+   inside the repository, and that result decides.
 
 ## What you change
 
@@ -28,16 +38,18 @@ You write `seed/site-plan.json`, `seed/media/`, `site/config.ts`, `site/theme.js
 kit command (after changing locales, for example), keep what it generates. You never write
 components, blocks, migrations or tests by hand.
 
-A part of the old site that no block fits (a calculator, a booking widget) gets
+A part of the old site that no block fits (a calculator, an embedded booking widget) gets
 the closest block and an entry in `gaps` with its URL and what it does. Tell the user plainly.
 Building it is separate work they can ask Hosait about. This holds when the customer calls that
-part the most important thing on the site, and when the demo is in an hour.
+part the most important thing on the site, and when the demo is in an hour. A web shop, a
+product catalogue, a login or member area, or booking or payment built into the site is not a
+gap: the check declines the site.
 
 ## Checkpoints with the user
 
-0. After `assess.md` (step 0), before anything else. **Red:** tell the user plainly that Hosait
-   does not move this kind of site and why (the reasons in `assess.md`), and stop: no crawl, no
-   extract, no build, no partial move. **Yellow:** show `assess.md` and go on only when the user
+0. After `assess.md` (Start step 1), before anything else. **Red:** tell the user plainly that
+   Hosait does not move this kind of site and why (the reasons in `assess.md`), and stop: no
+   repository, no crawl, no extract, no build, no partial move. **Yellow:** show `assess.md` and go on only when the user
    accepts the scope and the storage it needs. **Green:** go on.
 1. After `report.md`: walk through it, then ask what `site/questions.json` still needs.
 2. After the first template is imported: show it running (`pnpm dev`); agree it is close enough.
