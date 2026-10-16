@@ -8,6 +8,11 @@ description: Use when someone wants to move, rebuild, migrate or copy an existin
 Rebuild the customer's site on Site Kit (Next.js, Payload CMS) and publish it on Hosait.
 The steps are in the template's `AGENTS.md`: follow them in order.
 
+Hosait moves only simple content websites (about, services, news, people, contact). Web shops,
+product catalogues, sites with a login or member area and sites built around heavy integrations
+are declined, not partly rebuilt. `AGENTS.md` step 0 (`pnpm site-builder assess <url>`) decides
+this before anything else is read or built.
+
 ## Start
 
 1. `gh repo create <name> --private --template Hosait/site-kit --clone`. The template is public:
@@ -30,6 +35,10 @@ part the most important thing on the site, and when the demo is in an hour.
 
 ## Checkpoints with the user
 
+0. After `assess.md` (step 0), before anything else. **Red:** tell the user plainly that Hosait
+   does not move this kind of site and why (the reasons in `assess.md`), and stop: no crawl, no
+   extract, no build, no partial move. **Yellow:** show `assess.md` and go on only when the user
+   accepts the scope and the storage it needs. **Green:** go on.
 1. After `report.md`: walk through it, then ask what `site/questions.json` still needs.
 2. After the first template is imported: show it running (`pnpm dev`); agree it is close enough.
 3. Before publishing: the user approves the local site and the gap list.
@@ -59,3 +68,4 @@ part the most important thing on the site, and when the demo is in an hour.
 | "`site/blocks/custom/` is there for customer blocks" | Not in a rebuild. A new block, with the migration and tests it needs, is separate work. |
 | "A kit test fails with this config, so I'll fix it" | Leave it; name the failure in your hand-off. |
 | "I've passed this on to the Hosait team" | You can't. Tell the user what they can do. |
+| "It is a shop, but I can move the content pages" | Red means stop. No partial move; say why. |
