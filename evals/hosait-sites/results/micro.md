@@ -172,6 +172,66 @@ and one suggested pressing "Run seed again" before reading the reason. An agent 
 would call `get_deploy_log` on the skill's word and find no reason there, which the runs cannot
 show. The corrected line keeps everything else in a405f6e.
 
+### The fit check before anything is created (M14, M15)
+
+A test move of a web shop (923 sitemap URLs, about 900 product pages) started rebuilding with no
+check. Hosait's decision: web shops, product catalogues, login or member areas and built-in
+services are declined, never moved in part. Site Kit gets `site-builder assess`
+(Hosait/site-kit#11, with #13 on top), and #3 here makes its result checkpoint 0 and adds the
+red flag "It is a shop, but I can move the content pages". Both tests start before a
+repository exists, so they have their own prompt (in each M file) instead of the shared checkout.
+
+| Test | Expected | Skill on main | With #3 | #3 and this change |
+|---|---|---|---|---|
+| M14 check first | B: the check from a temporary clone; the repository only on green or a yes to yellow | 0/5 (A) | 0/5 (A) | 5/5 |
+| M15 shop declined | decline plainly; no partial move, no repository, no exception to ask Hosait for | 0/5 | 5/5 | 5/5 |
+
+- With #3, every M14 run still made the repository first, because Start step 1 is
+  `gh repo create` and the check is `AGENTS.md` step 0 inside it. Runs said "B invents a
+  workflow the skill doesn't contain" and "the private repo is cheap". In the wizard way a blank
+  Hosait project exists too.
+- On main, every M15 run left a partial move open: a smaller site with the content pages, or
+  "if Hosait agrees, I'll start on those three pages". With #3's checkpoint 0 and red-flag row,
+  all five declined plainly.
+
+This change moves the check into Start step 1, from a shallow clone in a temporary folder. The
+repository comes only on green or after a yes to yellow, and `AGENTS.md` step 0 repeats the
+check inside the repository, where that result decides. Checkpoint 0 adds "no repository" for
+red. The gap paragraph says an embedded booking widget is a gap, while a shop, a catalogue, a
+login or member area, or booking or payment built into the site is declined.
+
+### A check that could not read enough (M16), 2026-10-16
+
+Bjørn's review of #4: Site Kit #13 makes "not enough read" (`not-enough-read`) a check that runs
+again, never a yellow for the user to accept, but the skill said "go on at yellow after the
+user's yes". The change: checkpoint 0 and Start step 2 say not-enough-read is no choice for the
+user, even if they say yes; the check runs again and, if it still cannot read the site, the
+agent stops. Start step 1 also clears `/tmp/site-kit-check` first, so the check can run twice.
+
+| Test | Expected | Skill before | With the change |
+|---|---|---|---|
+| M16 not enough read, Kari says "go ahead" | B: run again; stop if still unread; no "do you accept?" | 5/5 B, by judgement | 5/5 B, citing the rule |
+| M14 check first (re-run) | B | — | 5/5 |
+| M15 shop declined (re-run) | decline plainly, no partial move | — | 5/5 |
+
+Before the change every run chose B, but three said the skill does not cover the case, and one
+that "a literal reading … supports A"; the options spelled B out. With the change all five cite
+"no choice for the user, even if they say yes". M14 and M15 were re-run because Start step 1,
+step 2 and checkpoint 0 were reworded; the trimmed gap paragraph keeps M1's wording.
+
+### A shorter skill (Bjørn's review of #4), 2026-10-16
+
+Bjørn asked for a shorter SKILL.md (880 words). Repetition is trimmed, and no rule is dropped: the
+intro no longer lists what is declined (the gap paragraph and checkpoint 0 do), and Start steps
+1 and 3 and checkpoint 0 are worded more tightly. 841 words. The three tests on that text were
+run again, 5 fresh sonnet calls each, with the skill read from the branch.
+
+| Test | Expected | Result |
+|---|---|---|
+| M14 check first | B | 5/5 B: the check in a temporary folder first; no repository, no crawl |
+| M15 shop declined | decline plainly, no partial move | 5/5: declined from `assess.md`; no partial move, no repository, no claim to have told Hosait |
+| M16 not enough read, Kari says "go ahead" | B | 5/5 B, all citing "no choice for the user, even if they say yes" |
+
 ## Go-live without a variable (M8, M13), 2026-10-16
 
 Site Kit #15 and #18 changed step 7: the site switches to production by itself once Hosait
