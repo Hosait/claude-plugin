@@ -8,12 +8,19 @@ description: Use when someone wants to move, rebuild, migrate or copy an existin
 Rebuild the customer's site on Site Kit (Next.js, Payload CMS) and publish it on Hosait.
 The steps are in the template's `AGENTS.md`: follow them in order.
 
-Hosait moves only simple content websites (about, services, news, people, contact); the fit
-check (`site-builder assess <url>`) decides first, and what it declines is never partly rebuilt.
+Hosait moves only simple content websites (about, services, news, people, contact). Hosait's
+check, then `site-builder assess <url>`, decide first; what either declines is never partly rebuilt.
 
 ## Start
 
-1. Check the site first. Create nothing before this:
+1. Hosait's check first; clone, create and write nothing before it. The user signs in
+   (`/mcp` → hosait) to the project they made with «Flytt nettsiden din» on hosait.com. Read
+   `project.siteMove` from `get_project_status`. Go on only if it exists, `class` is green (or
+   yellow with `acceptedScope`), `assessedAt` is under 7 days old and `url` is the site to move.
+   Otherwise stop and tell the user, in their language, to run hosait.com → New project →
+   «Flytt nettsiden din» first: nothing is built before Hosait's check says yes. No way around
+   it, nothing on red, and the local check never replaces it.
+2. Then the local check, the second one:
 
        rm -rf /tmp/site-kit-check
        git clone --depth 1 https://github.com/Hosait/site-kit /tmp/site-kit-check
@@ -21,12 +28,12 @@ check (`site-builder assess <url>`) decides first, and what it declines is never
        node /tmp/site-kit-check/packages/site-builder/bin/site-builder.js assess <url> --out /tmp/site-kit-check/assess
 
    It writes `assess.md` and answers green, yellow or red (red exits 3); see checkpoint 0.
-2. Only on green, or on yellow after the user's yes (never on not enough read):
-   `gh repo create <name> --private --template Hosait/site-kit --clone`. The template is public:
-   if this fails, tell the user what GitHub said and check the name, the `gh` sign-in and the
-   network, or the user clicks "Use this template" on github.com/Hosait/site-kit. You cannot
-   reach Hosait: never say you have told Hosait, or will.
-3. Read `AGENTS.md` in the new repository and follow its steps; its step 0 repeats the check, and
+3. Only on green, or on yellow after the user's yes (never on not enough read):
+   `gh repo create <name> --private --template Hosait/site-kit --clone`. If this fails, tell the
+   user what GitHub said and check the name, the `gh` sign-in and the network, or the user
+   clicks "Use this template" on github.com/Hosait/site-kit. You cannot reach Hosait: never say
+   you have told Hosait, or will.
+4. Read `AGENTS.md` in the new repository and follow its steps; its step 0 repeats the check, and
    that result decides.
 
 ## What you change
@@ -44,11 +51,12 @@ or member area, or booking or payment built into the site is not a gap: the chec
 
 ## Checkpoints with the user
 
-0. After `assess.md`, before anything else. **Red:** say plainly why (from `assess.md`) and stop:
-   no repository, no crawl, no partial move. **Not enough read** (`not-enough-read`) is no choice
-   for the user, even if they say yes: run the check again (a larger `--budget`, or the address a
-   note names); if it still fails, stop and say so. **Yellow:** go on only when the user accepts
-   the scope and storage in `assess.md`. **Green:** go on.
+0. After `assess.md` (Hosait's check has passed), before anything else. **Red:** say plainly why
+   (from `assess.md`) and stop: no repository, no crawl, no partial move. **Not enough read**
+   (`not-enough-read`) is no choice for the user, even if they say yes: run the check again (a
+   larger `--budget`, or the address a note names); if it still fails, stop and say so.
+   **Yellow:** go on only when the user accepts the scope and storage in `assess.md`. **Green:**
+   go on.
 1. After `report.md`: walk through it, then ask what `site/questions.json` still needs.
 2. After the first template is imported: show it running (`pnpm dev`); agree it is close enough.
 3. Before publishing: the user approves the local site and the gap list.
@@ -57,10 +65,9 @@ or member area, or booking or payment built into the site is not a gap: the chec
 
 1. The user pushes the repository; you push only if they say so. This holds for every later
    push too, including the ones `AGENTS.md` asks for.
-2. If the user signed in (`/mcp` → hosait) to a blank project, connect it with
-   `connect_repository`; they approve it in Hosait (if the tool refuses, they connect it on that
-   project's page). Without a blank project, they use the wizard (New project → GitHub → the
-   repository), then sign in again and pick the new project. Never ask for a token.
+2. Connect the repository to the «Flytt nettsiden din» project with `connect_repository`; the
+   user approves it in Hosait (if the tool refuses, they connect it on that project's page).
+   Never ask for a token.
 3. Follow the first deploy (`wait_for_deploy`, then `nextSteps` from `get_project_status`): it
    imports the plan, then the user creates the first admin user right away. If the import fails,
    the reason is in the web service's log (`get_runtime_logs`, or Logs on the project page), on
@@ -79,3 +86,4 @@ or member area, or booking or payment built into the site is not a gap: the chec
 | "A kit test fails with this config, so I'll fix it" | Leave it; name the failure in your hand-off. |
 | "I've passed this on to the Hosait team" | You can't. Tell the user what they can do. |
 | "It is a shop, but I can move the content pages" | Red means stop. No partial move; say why. |
+| "No Hosait check, but the local check is green" | Stop. Both checks must pass, Hosait's first. |

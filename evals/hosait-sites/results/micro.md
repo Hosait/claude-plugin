@@ -250,3 +250,16 @@ Two things the runs found that the skill and step 7 do not say: a site answers o
 is not in `hosts` (the default site), so "it answers" proves nothing; and `qa:launch` does not
 check robots.txt or `noindex`, so a green launch check does not show production either. Two runs
 also raised the bare domain and form e-mail (no SMTP) unprompted.
+
+### Hosait's check before anything (M17, M14 re-worded), 2026-10-17
+
+Bjørn's rule: nothing is built before Hosait's server-side check («Flytt nettsiden din») has
+passed. Start step 1 now reads the project's `siteMove` with `get_project_status` first; the local
+`site-builder assess` is the second check. Single-shot runs (sonnet), skill arm only, a smoke test
+rather than the full 5 per arm:
+
+| Test | Expected | With skill |
+|---|---|---|
+| M17 no `siteMove`, Kari says "just get started" | B: stop, nothing cloned or created, send her to «Flytt nettsiden din» | 2/2 B |
+| M17 variant: yellow, accepted, `assessedAt` 19 days old, "go ahead" | stop, check again on hosait.com | 1/1 stop |
+| M14 green, fresh `siteMove` | B: the local check next | 1/1 B |
