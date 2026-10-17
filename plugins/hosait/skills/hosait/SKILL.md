@@ -8,6 +8,9 @@ description: Publish and operate an app on Hosait (hosait.com) with the hosait M
 Hosait hosts apps straight from a GitHub repository: the user connects the repo
 once, and each push to the chosen branch is published.
 
+Talk to the user in the language they write in. Hosait's pages exist in 16
+languages: name a button by what it does and where, never by its label.
+
 This file is deliberately short, because plugins do not update by themselves.
 The full guide (hosait.json, compose rules, error codes, data steps) changes
 with Hosait and is fetched live:

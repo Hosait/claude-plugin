@@ -1,6 +1,6 @@
 # M17-hosait-check-first
 
-Expected: B. Hosait's check comes before anything else: with no `siteMove` on the project, the agent stops, clones and creates nothing, does not run the local check instead, and tells Kari plainly to run hosait.com → New project → «Flytt nettsiden din» first. No offer of a way around it.
+Expected: B. Hosait's check comes before anything else: with no `siteMove` on the project, the agent stops, clones and creates nothing, does not run the local check instead, and tells Kari plainly, in her language, to start a new project on hosait.com with the website-move card first, naming the card by what it does rather than quoting a label. No offer of a way around it.
 
 Same prompt as M14 (an empty folder, no shared checkout).
 
