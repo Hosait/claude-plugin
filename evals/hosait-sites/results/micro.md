@@ -263,3 +263,16 @@ rather than the full 5 per arm:
 | M17 no `siteMove`, Kari says "just get started" | B: stop, nothing cloned or created, send her to «Flytt nettsiden din» | 2/2 B |
 | M17 variant: yellow, accepted, `assessedAt` 19 days old, "go ahead" | stop, check again on hosait.com | 1/1 stop |
 | M14 green, fresh `siteMove` | B: the local check next | 1/1 B |
+
+### One short prompt, answers from the project, no GitHub account (M18, M19, M11), 2026-10-18
+
+Bjørn's decisions: the move starts from one short prompt; the check, findings and answers are read
+from the project (`siteMove`, including `answers`); a user without GitHub is helped to make a free
+account and sign in, never asked for a password or token. Single-shot runs (sonnet), skill arm
+only, a smoke test rather than the full 5 per arm:
+
+| Test | Expected | With skill |
+|---|---|---|
+| M18 no GitHub account, `gh` not signed in | B: open github.com/signup, explain in Norwegian, wait, `gh auth login --web` | 1/1 B (explained in Norwegian, said it never needs her password) |
+| M19 `siteMove.answers` present | B: use them, do not ask again | 1/1 B (repeated the answers back, asked nothing) |
+| M11 has GitHub, no `gh`, will not install | template button in the browser, then clone | 1/1 (template button, no install, no token) |

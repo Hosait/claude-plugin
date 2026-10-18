@@ -15,7 +15,8 @@ What you get:
 - **hosait-sites**: moves an existing website onto Hosait. Your Claude rebuilds it on Hosait's
   Site Kit (Next.js + Payload CMS) close to the original, lists anything it could not match, and
   publishes it. It starts only after Hosait's check of the site (the website-move card for a
-  new project on hosait.com) has passed. Site Kit is public: [Hosait/site-kit](https://github.com/Hosait/site-kit) (MIT).
+  new project on hosait.com) has passed, and reads what you answered there instead of asking
+  again. No GitHub account yet? It helps you make a free one. Site Kit is public: [Hosait/site-kit](https://github.com/Hosait/site-kit) (MIT).
 
 Needs Claude Code 2.1.292 or later for the one-line install. On older versions:
 `/plugin marketplace add Hosait/claude-plugin`, then `/plugin install hosait@hosait`.
