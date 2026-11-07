@@ -1,1 +1,4 @@
 evals/hosait-sites/old-site/
+
+# Claude Code: lokale tillatelser kan inneholde kommandoer med hemmeligheter
+.claude/settings.local.json
