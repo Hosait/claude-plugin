@@ -14,6 +14,33 @@ button by what it does and where, never by its label.
 Hosait moves only simple content websites (about, services, news, people, contact). What
 Hosait's check or `site-builder assess` declines is never partly rebuilt.
 
+## Before you start
+
+A move needs two things this skill cannot give itself. Check them before anything else, and stop
+if either is missing. Site Kit's `AGENTS.md` opens with the same section.
+
+1. **The Hosait connection.** You need the tools of the `hosait` MCP server: at least
+   `get_project_status` and `connect_repository`. If you do not have them, stop and tell the
+   user to connect Hosait to their AI tool first. In Claude Code that is
+   `claude plugin install hosait --marketplace Hosait/claude-plugin`, then `/mcp`, choose hosait
+   and sign in; hosait.com shows the commands for other AI tools when the user connects one to
+   the project. Do not start the move without it, and never read the old site some other way
+   instead.
+2. **The right project.** Call `get_project_status`. If the project it returns is not the one
+   the user means (another name or address), stop and ask: the connection points at the wrong
+   project.
+3. **The local tools.** In the Site Kit repository, run
+
+       node scripts/kit/preflight.mjs
+
+   (plain Node, so it works before `pnpm install`). It checks Node.js, pnpm, git, Docker, the
+   Site Kit packages, Playwright's Chromium and site-builder, and exits 1 when something is
+   missing. Run the commands it lists under «Run yourself». Pass the ones under «Ask the user to»
+   on to the user in plain words and wait for them. Run the check again until it says «All set».
+   The repository exists only after step 5 of Start has created it (or the user's copy from the
+   template button is cloned): run this as soon as you are in it, before you follow `AGENTS.md`.
+   If the session already starts in a Site Kit repository, run it now.
+
 ## Start
 
 The user starts with one short prompt from Hosait's page; the rest is in the project.
