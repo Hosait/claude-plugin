@@ -21,7 +21,7 @@ with Hosait and is fetched live:
    https://hosait.com/skills/hosait/SKILL.md instead.
 2. If a hosait tool answers that it needs sign-in, tell the user: type `/mcp`,
    choose **hosait**, sign in in the browser and pick the project.
-3. After a deploy (`wait_for_deploy`) and in `get_project_status`, read
+3. After a deploy (`wait_for_deploy`) and in `get_project`, read
    `nextSteps` first. Before you tell the user the app is done, do or ask about
    every step that is not done (create the admin user, upload files, import
    data, …).
