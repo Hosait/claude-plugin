@@ -17,8 +17,12 @@ with Hosait and is fetched live:
 
 1. **Before you change hosait.json, a Dockerfile or a compose file, or explain an
    error code, call the `get_hosait_guide` tool** (hosait MCP server) and follow
-   it. It is always the current version. If the tool is not available, read
-   https://hosait.com/skills/hosait/SKILL.md instead.
+   it. It is always the current version. Without `topic` it gives the first
+   part: publishing from start to end, and which part holds what. Call it again
+   with `topic` for the details you need: `hosait-json`, `compose`,
+   `variables`, `tools` or `errors`. If the tool is not available, read
+   https://hosait.com/skills/hosait/SKILL.md and the part it names, for
+   example https://hosait.com/skills/hosait/compose.md.
 2. If a hosait tool answers that it needs sign-in, tell the user: type `/mcp`,
    choose **hosait**, sign in in the browser and pick the project.
 3. After a deploy (`wait_for_deploy`) and in `get_project`, read
