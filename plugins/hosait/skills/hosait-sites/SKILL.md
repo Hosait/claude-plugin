@@ -19,7 +19,7 @@ Hosait's check or `site-builder assess` declines is never partly rebuilt.
 The user starts with one short prompt from Hosait's page; the rest is in the project.
 
 1. Hosait's check first; clone, create and write nothing before it. Read `project.siteMove`
-   from `get_project_status`. If the hosait tools are not signed in, tell the user: type `/mcp`,
+   from `get_project`. If the hosait tools are not signed in, tell the user: type `/mcp`,
    choose hosait, sign in in the browser that opens and choose the project they made with the
    website-move card on hosait.com; then go on. Go on only if `siteMove`
    exists, `class` is green (or yellow with `acceptedScope`), `assessedAt` is under 7 days old
@@ -77,7 +77,7 @@ booking or payment built into the site is not a gap: the check declines it.
 2. Connect the repository to the website-move project with `connect_repository`; the
    user approves it in Hosait (if the tool refuses, they connect it on that project's page).
    Never ask for a token.
-3. Follow the first deploy (`wait_for_deploy`, then `nextSteps` from `get_project_status`): it
+3. Follow the first deploy (`wait_for_deploy`, then `nextSteps` from `get_project`): it
    imports the plan; then the user creates the first admin user. If the import fails, the
    reason is in `get_runtime_logs` on lines starting with `[seed]`. Fix the plan, get it pushed,
    and ask the user to press the button that runs the seed again on the project page (a push
